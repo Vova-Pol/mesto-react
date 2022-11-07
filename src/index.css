@@ -6,7 +6,6 @@
 
 /* Page */
 @import url(./blocks/page/page.css);
-@import url(./blocks/page/__container/page__container.css);
 
 /* Section sizing */
 @import url(./blocks/section-sizing/section-sizing.css);
