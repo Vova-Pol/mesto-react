@@ -18,7 +18,11 @@ function PopupWithForm(props) {
         <button className="popup__save-button" type="submit">
           Сохранить
         </button>
-        <button className="popup__close-button" type="button"></button>
+        <button
+          className="popup__close-button"
+          type="button"
+          onClick={props.onClose}
+        ></button>
       </form>
     </div>
   );
