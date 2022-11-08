@@ -1,26 +1,11 @@
-function Main() {
-  const handleEditAvatarClick = () => {
-    const popupEditAvatar = document.querySelector("#popup-avatar-image");
-    popupEditAvatar.classList.add("popup_opened");
-  };
-
-  const handleEditProfileClick = () => {
-    const popupEditProfile = document.querySelector("#popup-edit");
-    popupEditProfile.classList.add("popup_opened");
-  };
-
-  const handleAddPlaceClick = () => {
-    const popupAddPost = document.querySelector("#popup-add-post");
-    popupAddPost.classList.add("popup_opened");
-  };
-
+function Main(props) {
   return (
     <main>
       <section className="profile section-sizing">
         <img src="#" alt="аватар профайла" className="profile__picture" />
         <div
           className="profile__edit-icon-container"
-          onClick={handleEditAvatarClick}
+          onClick={props.onEditAvatar}
         >
           <span className="profile__edit-icon"></span>
         </div>
@@ -31,12 +16,12 @@ function Main() {
           </div>
           <button
             className="profile__edit-button"
-            onClick={handleEditProfileClick}
+            onClick={props.onEditProfile}
           ></button>
         </article>
         <button
           className="profile__add-button"
-          onClick={handleAddPlaceClick}
+          onClick={props.onAddPlace}
         ></button>
       </section>
 
