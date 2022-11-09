@@ -1,8 +1,30 @@
+import React from "react";
+import api from "../utils/api.js";
+
 function Main(props) {
+  const [userName, setUserName] = React.useState();
+  const [userOccupation, setUserOccupation] = React.useState();
+  const [userAvatar, setUserAvatar] = React.useState();
+
+  api
+    .requestUserInfo()
+    .then((userData) => {
+      setUserName(userData.name);
+      setUserOccupation(userData.about);
+      setUserAvatar(userData.avatar);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
   return (
     <main>
       <section className="profile section-sizing">
-        <img src="#" alt="аватар профайла" className="profile__picture" />
+        <img
+          src={userAvatar}
+          alt="аватар профайла"
+          className="profile__picture"
+        />
         <div
           className="profile__edit-icon-container"
           onClick={props.onEditAvatar}
@@ -11,8 +33,8 @@ function Main(props) {
         </div>
         <article className="profile__info">
           <div className="profile__container">
-            <h1 className="profile__name">Жак Кусто</h1>
-            <p className="profile__occupation">Исследователь океана</p>
+            <h1 className="profile__name">{userName}</h1>
+            <p className="profile__occupation">{userOccupation}</p>
           </div>
           <button
             className="profile__edit-button"
