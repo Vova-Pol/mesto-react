@@ -2,21 +2,43 @@ import React from "react";
 import api from "../utils/api.js";
 
 function Main(props) {
+  console.log("Main rendered starts");
+
   const [userName, setUserName] = React.useState();
   const [userOccupation, setUserOccupation] = React.useState();
   const [userAvatar, setUserAvatar] = React.useState();
+  const [cards, setCards] = React.useState([]);
 
-  api
-    .requestUserInfo()
-    .then((userData) => {
-      setUserName(userData.name);
-      setUserOccupation(userData.about);
-      setUserAvatar(userData.avatar);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  React.useEffect(() => {
+    console.log("useEffect 0");
+    api
+      .requestUserInfo()
+      .then((userData) => {
+        console.log("api user 0");
+        setUserName(userData.name);
+        setUserOccupation(userData.about);
+        setUserAvatar(userData.avatar);
+        console.log("api user 1");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
+    api
+      .requestInitialCards()
+      .then((cardsArr) => {
+        console.log("api cards 0");
+        setCards(cardsArr);
+        console.log("api cards 1");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    console.log("useEffect 1");
+  }, []);
+
+  console.log("Main rendered finished");
+  console.log(cards);
   return (
     <main>
       <section className="profile section-sizing">
@@ -49,11 +71,15 @@ function Main(props) {
 
       <section className="elements section-sizing">
         <ul className="elements__list">
-          <template id="place-card">
-            <li className="elements__item">
-              <img src="#" alt="" className="elements__image" />
+          {cards.map((cardData) => (
+            <li className="elements__item" key={cardData._id}>
+              <img
+                src={cardData.link}
+                alt={cardData.name}
+                className="elements__image"
+              />
               <div className="elements__info">
-                <h2 className="elements__title"></h2>
+                <h2 className="elements__title">{cardData.name}</h2>
                 <div className="elements__like-container">
                   <button className="elements__like-button"></button>
                   <span className="elements__like-counter"></span>
@@ -61,7 +87,7 @@ function Main(props) {
               </div>
               <button className="elements__delete-button"></button>
             </li>
-          </template>
+          ))}
         </ul>
       </section>
     </main>
