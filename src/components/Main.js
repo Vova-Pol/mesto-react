@@ -1,5 +1,6 @@
 import React from "react";
 import api from "../utils/api.js";
+import Card from "./Card.js";
 
 function Main(props) {
   console.log("Main rendered starts");
@@ -72,21 +73,7 @@ function Main(props) {
       <section className="elements section-sizing">
         <ul className="elements__list">
           {cards.map((cardData) => (
-            <li className="elements__item" key={cardData._id}>
-              <img
-                src={cardData.link}
-                alt={cardData.name}
-                className="elements__image"
-              />
-              <div className="elements__info">
-                <h2 className="elements__title">{cardData.name}</h2>
-                <div className="elements__like-container">
-                  <button className="elements__like-button"></button>
-                  <span className="elements__like-counter"></span>
-                </div>
-              </div>
-              <button className="elements__delete-button"></button>
-            </li>
+            <Card data={cardData} key={cardData._id} />
           ))}
         </ul>
       </section>
