@@ -4,6 +4,7 @@ import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
+import PopupImage from "./PopupImage.js";
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupIsOpen] = React.useState(false);
@@ -28,6 +29,14 @@ function App() {
     setAddPlacePopupIsOpen(false);
     setEditAvatarPopupIsOpen(false);
     setEditProfilePopupIsOpen(false);
+    setSelectedCard();
+  }
+
+  const [selectedCard, setSelectedCard] = React.useState();
+
+  function handleCardClick(cardData) {
+    setSelectedCard(cardData);
+    console.log(cardData);
   }
 
   return (
@@ -38,6 +47,7 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
 
@@ -111,13 +121,7 @@ function App() {
           ></span>
         </PopupWithForm>
 
-        <div className="popup popup_dark" id="popup-image">
-          <div className="popup__image-container">
-            <img src="#" alt="" className="popup__image" />
-            <button className="popup__close-button" type="button"></button>
-            <p className="popup__subtitle"></p>
-          </div>
-        </div>
+        <PopupImage card={selectedCard} onClose={closeAllPopups} />
 
         <div className="popup" id="popup-delete-card">
           <form className="popup__form">

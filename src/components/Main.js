@@ -8,6 +8,7 @@ function Main(props) {
   const [userName, setUserName] = React.useState();
   const [userOccupation, setUserOccupation] = React.useState();
   const [userAvatar, setUserAvatar] = React.useState();
+
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -73,7 +74,11 @@ function Main(props) {
       <section className="elements section-sizing">
         <ul className="elements__list">
           {cards.map((cardData) => (
-            <Card data={cardData} key={cardData._id} />
+            <Card
+              cardData={cardData}
+              key={cardData._id}
+              onCardClick={props.onCardClick}
+            />
           ))}
         </ul>
       </section>
