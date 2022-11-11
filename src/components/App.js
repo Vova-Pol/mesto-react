@@ -55,6 +55,7 @@ function App() {
           name="edit-profile"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          buttonText="Сохранить"
         >
           <input
             type="text"
@@ -91,6 +92,7 @@ function App() {
           name="add-post"
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          buttonText="Создать"
         >
           <input
             type="text"
@@ -139,6 +141,7 @@ function App() {
           name="avatar-image"
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          buttonText="Сохранить"
         >
           <input
             type="url"
