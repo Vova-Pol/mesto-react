@@ -3,8 +3,6 @@ import api from "../utils/api.js";
 import Card from "./Card.js";
 
 function Main(props) {
-  console.log("Main rendered starts");
-
   const [userName, setUserName] = React.useState();
   const [userOccupation, setUserOccupation] = React.useState();
   const [userAvatar, setUserAvatar] = React.useState();
@@ -12,15 +10,12 @@ function Main(props) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    console.log("useEffect 0");
     api
       .requestUserInfo()
       .then((userData) => {
-        console.log("api user 0");
         setUserName(userData.name);
         setUserOccupation(userData.about);
         setUserAvatar(userData.avatar);
-        console.log("api user 1");
       })
       .catch((err) => {
         console.error(err);
@@ -29,18 +24,13 @@ function Main(props) {
     api
       .requestInitialCards()
       .then((cardsArr) => {
-        console.log("api cards 0");
         setCards(cardsArr);
-        console.log("api cards 1");
       })
       .catch((err) => {
         console.error(err);
       });
-    console.log("useEffect 1");
   }, []);
 
-  console.log("Main rendered finished");
-  console.log(cards);
   return (
     <main>
       <section className="profile section-sizing">
