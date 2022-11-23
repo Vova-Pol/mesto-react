@@ -6,7 +6,7 @@ import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/api.js";
-import { CurrentUser } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupIsOpen] = React.useState(false);
@@ -20,8 +20,14 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState();
 
   React.useEffect(() => {
-    setCurrentUser(api.requestUserInfo());
+    const fetchUserData = async () => {
+      const userData = await api.requestUserInfo();
+      setCurrentUser(userData);
+    };
+    fetchUserData();
   }, []);
+
+  console.log(currentUser);
 
   function handleAddPlaceClick() {
     setAddPlacePopupIsOpen(true);
@@ -49,14 +55,15 @@ function App() {
   return (
     <div className="page">
       <div className="page__container">
-        <CurrentUser.Provider value={currentUser}>
+        {/* <p>{currentUser.name}</p> */}
+        <CurrentUserContext.Provider value={currentUser}>
           <Header />
-          <Main
+          {/* <Main
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
-          />
+          /> */}
           <Footer />
 
           <PopupWithForm
@@ -165,7 +172,7 @@ function App() {
               id="avatar-link-input-error"
             ></span>
           </PopupWithForm>
-        </CurrentUser.Provider>
+        </CurrentUserContext.Provider>
       </div>
     </div>
   );

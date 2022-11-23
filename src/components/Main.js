@@ -1,26 +1,14 @@
 import React from "react";
 import api from "../utils/api.js";
 import Card from "./Card.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userOccupation, setUserOccupation] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
-
   const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    api
-      .requestUserInfo()
-      .then((userData) => {
-        setUserName(userData.name);
-        setUserOccupation(userData.about);
-        setUserAvatar(userData.avatar);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const currentUser = React.useContext(CurrentUserContext);
 
+  React.useEffect(() => {
     api
       .requestInitialCards()
       .then((cardsArr) => {
@@ -35,7 +23,7 @@ function Main(props) {
     <main>
       <section className="profile section-sizing">
         <img
-          src={userAvatar}
+          src={currentUser.avatar}
           alt="аватар профайла"
           className="profile__picture"
         />
@@ -47,8 +35,8 @@ function Main(props) {
         </div>
         <article className="profile__info">
           <div className="profile__container">
-            <h1 className="profile__name">{userName}</h1>
-            <p className="profile__occupation">{userOccupation}</p>
+            <h1 className="profile__name">{currentUser.name}</h1>
+            <p className="profile__occupation">{currentUser.about}</p>
           </div>
           <button
             className="profile__edit-button"
