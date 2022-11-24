@@ -33,8 +33,6 @@ function App() {
     fetchUserData();
   }, []);
 
-  console.log(currentUser);
-
   function handleAddPlaceClick() {
     setAddPlacePopupIsOpen(true);
   }

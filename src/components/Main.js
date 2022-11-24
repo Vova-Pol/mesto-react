@@ -13,11 +13,25 @@ function Main(props) {
       .requestInitialCards()
       .then((cardsArr) => {
         setCards(cardsArr);
+        console.log(cardsArr[3]);
       })
       .catch((err) => {
         console.error(err);
       });
   }, []);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+
+    api.changeLikeCardStatus(card, isLiked, currentUser).then((newCard) => {
+      console.log(newCard);
+      setCards(
+        cards.map((card) => {
+          return card._id === newCard._id ? newCard : card;
+        })
+      );
+    });
+  }
 
   return (
     <main>
@@ -56,6 +70,7 @@ function Main(props) {
               cardData={cardData}
               key={cardData._id}
               onCardClick={props.onCardClick}
+              onCardLike={handleCardLike}
             />
           ))}
         </ul>

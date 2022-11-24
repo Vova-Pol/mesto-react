@@ -19,6 +19,10 @@ function Card(props) {
   function handleClick() {
     props.onCardClick(props.cardData);
   }
+
+  function handleLikeClick() {
+    props.onCardLike(props.cardData);
+  }
   return (
     <li className="elements__item" key={props.cardData._id}>
       <img
@@ -30,7 +34,10 @@ function Card(props) {
       <div className="elements__info">
         <h2 className="elements__title">{props.cardData.name}</h2>
         <div className="elements__like-container">
-          <button className={cardLikeButtonClassName}></button>
+          <button
+            className={cardLikeButtonClassName}
+            onClick={handleLikeClick}
+          ></button>
           <span className="elements__like-counter"></span>
         </div>
       </div>
