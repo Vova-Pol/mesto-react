@@ -17,7 +17,13 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState();
 
-  const [currentUser, setCurrentUser] = React.useState();
+  const [currentUser, setCurrentUser] = React.useState({
+    name: "",
+    about: "",
+    avatar: "",
+    _id: "",
+    cohort: "",
+  });
 
   React.useEffect(() => {
     const fetchUserData = async () => {
@@ -55,15 +61,14 @@ function App() {
   return (
     <div className="page">
       <div className="page__container">
-        {/* <p>{currentUser.name}</p> */}
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
-          {/* <Main
+          <Main
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
-          /> */}
+          />
           <Footer />
 
           <PopupWithForm
