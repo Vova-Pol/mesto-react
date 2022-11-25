@@ -57,6 +57,18 @@ function App() {
     setSelectedCard();
   }
 
+  function handleUpdateUser(newData) {
+    api
+      .sendRequest("users/me", "PATCH", newData)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <div className="page">
       <div className="page__container">
@@ -73,6 +85,7 @@ function App() {
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
           />
 
           <PopupWithForm

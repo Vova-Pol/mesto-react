@@ -14,6 +14,7 @@ function PopupWithForm(props) {
         name={props.name}
         id="edit-profile-form"
         noValidate
+        onSubmit={props.onSubmit}
       >
         <h3 className="popup__title">{props.title}</h3>
         {props.children}
