@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupIsOpen] = React.useState(false);
@@ -69,42 +70,10 @@ function App() {
           />
           <Footer />
 
-          <PopupWithForm
-            title="Редактировать профиль"
-            name="edit-profile"
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-            buttonText="Сохранить"
-          >
-            <input
-              type="text"
-              placeholder="Имя"
-              name="name"
-              className="popup__input"
-              id="profile-name-input"
-              required
-              minLength="2"
-              maxLength="40"
-            />
-            <span
-              className="popup__input-error"
-              id="profile-name-input-error"
-            ></span>
-            <input
-              type="text"
-              placeholder="Род деятельности"
-              name="about"
-              className="popup__input"
-              id="profile-occupation-input"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span
-              className="popup__input-error"
-              id="profile-occupation-input-error"
-            ></span>
-          </PopupWithForm>
+          />
 
           <PopupWithForm
             title="Новое место"
