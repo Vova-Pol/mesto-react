@@ -19,6 +19,10 @@ export class Api {
     return this.sendRequest(`cards/${card._id}/likes`, method, userData);
   }
 
+  changeDeleteCardStatus(card) {
+    return this.sendRequest(`cards/${card._id}`, "DELETE");
+  }
+
   sendRequest(urlEnding, method, data = null) {
     this._init.method = method;
     const url = this._baseUrl + urlEnding;
