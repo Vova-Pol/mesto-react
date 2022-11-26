@@ -82,6 +82,49 @@ function App() {
       });
   }
 
+  // --- Cards
+
+  const [cards, setCards] = React.useState([]);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+
+    api
+      .changeLikeCardStatus(card, isLiked, currentUser)
+      .then((newCard) => {
+        setCards(
+          cards.map((card) => {
+            return card._id === newCard._id ? newCard : card;
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleCardDelete(card) {
+    api
+      .changeDeleteCardStatus(card)
+      .then(() => {
+        setCards(cards.filter((elem) => elem._id !== card._id));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  React.useEffect(() => {
+    api
+      .requestInitialCards()
+      .then((cardsArr) => {
+        setCards(cardsArr);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <div className="page">
       <div className="page__container">
@@ -92,6 +135,9 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
           <Footer />
 

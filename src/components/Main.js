@@ -1,51 +1,9 @@
 import React from "react";
-import api from "../utils/api.js";
 import Card from "./Card.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Main(props) {
-  const [cards, setCards] = React.useState([]);
-
   const currentUser = React.useContext(CurrentUserContext);
-
-  React.useEffect(() => {
-    api
-      .requestInitialCards()
-      .then((cardsArr) => {
-        setCards(cardsArr);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((user) => user._id === currentUser._id);
-
-    api
-      .changeLikeCardStatus(card, isLiked, currentUser)
-      .then((newCard) => {
-        setCards(
-          cards.map((card) => {
-            return card._id === newCard._id ? newCard : card;
-          })
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  function handleCardDelete(card) {
-    api
-      .changeDeleteCardStatus(card)
-      .then(() => {
-        setCards(cards.filter((elem) => elem._id !== card._id));
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
 
   return (
     <main>
@@ -79,13 +37,13 @@ function Main(props) {
 
       <section className="elements section-sizing">
         <ul className="elements__list">
-          {cards.map((cardData) => (
+          {props.cards.map((cardData) => (
             <Card
               cardData={cardData}
               key={cardData._id}
               onCardClick={props.onCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
             />
           ))}
         </ul>
