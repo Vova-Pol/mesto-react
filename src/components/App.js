@@ -8,6 +8,7 @@ import ImagePopup from "./ImagePopup.js";
 import api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupIsOpen] = React.useState(false);
@@ -60,6 +61,18 @@ function App() {
   function handleUpdateUser(newData) {
     api
       .sendRequest("users/me", "PATCH", newData)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleUpdateAvatar(newData) {
+    api
+      .sendRequest("users/me/avatar", "PATCH", newData)
       .then((userData) => {
         setCurrentUser(userData);
         closeAllPopups();
@@ -137,26 +150,11 @@ function App() {
             </form>
           </div>
 
-          <PopupWithForm
-            title="Обновить аватар"
-            name="avatar-image"
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            buttonText="Сохранить"
-          >
-            <input
-              type="url"
-              placeholder="Ссылка на картинку"
-              name="avatar"
-              className="popup__input"
-              id="avatar-link-input"
-              required
-            />
-            <span
-              className="popup__input-error"
-              id="avatar-link-input-error"
-            ></span>
-          </PopupWithForm>
+            onUpdateAvatar={handleUpdateAvatar}
+          />
         </CurrentUserContext.Provider>
       </div>
     </div>
