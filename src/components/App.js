@@ -28,11 +28,9 @@ function App() {
   });
 
   React.useEffect(() => {
-    const fetchUserData = async () => {
-      const userData = await api.requestUserInfo();
+    api.requestUserInfo().then((userData) => {
       setCurrentUser(userData);
-    };
-    fetchUserData();
+    });
   }, []);
 
   function handleAddPlaceClick() {
