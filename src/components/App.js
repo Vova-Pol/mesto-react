@@ -28,9 +28,14 @@ function App() {
   });
 
   React.useEffect(() => {
-    api.requestUserInfo().then((userData) => {
-      setCurrentUser(userData);
-    });
+    api
+      .requestUserInfo()
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   function handleAddPlaceClick() {
